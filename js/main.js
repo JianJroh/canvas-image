@@ -230,7 +230,7 @@ function goDiscernEdge() {
     console.log('完成绘制');
 }
 
-var imgs = ['flower.jpg', 'flower2.jpg', 'flower3.jpg', 'flower4.jpg'].map((item) => `../img/${item}`);
+var imgs = ['flower.jpg', 'flower2.jpg', 'flower3.jpg', 'flower4.jpg'].map((item) => `./img/${item}`);
 var changeImg = function (){
     var imgIndex = 1;
     return function(){
