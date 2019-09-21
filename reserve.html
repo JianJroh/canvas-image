@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基于H5的图像反转</title>
+</head>
+
+<body>
+
+    <img id="scream" src="./img/flower.jpg" width="600px" height="370px">
+    <canvas id="myCanvas" width="600px" height="370px">
+    </canvas>
+    <script>
+        var oldImgData;
+        var imgData;
+        document.getElementById("scream").onload = function () {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var img = document.getElementById("scream");
+            ctx.drawImage(img, 0, 0);
+            imgData = ctx.getImageData(0, 0, c.width, c.height);
+            oldImgData = ctx.getImageData(0, 0, c.width, c.height);
+            // oldImgData = imgData;
+
+            // 反转颜色
+            for (var i = 0; i < imgData.data.length; i += 4) {
+                imgData.data[i] = 255 - imgData.data[i];
+                imgData.data[i + 1] = 255 - imgData.data[i + 1];
+                imgData.data[i + 2] = 255 - imgData.data[i + 2];
+                imgData.data[i + 3] = 255;
+            }
+            ctx.putImageData(imgData, 0, 0);
+        };
+    </script>
+
+</body>
+
+</html>

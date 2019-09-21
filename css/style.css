@@ -1,0 +1,65 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.clearfix:after{
+    display: block;
+    font-size: 0;
+    line-height:0;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+    content: "";  
+}
+
+/* 为兼容IE6,IE7，因为ie6,ie7不能用after伪类 */
+.clearfix{            
+    zoom:1;
+}
+.ti{
+    height: 60px;
+    padding: 25px 0;
+    color: #0099FF;
+    line-height: 60px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+.main{
+    margin: 0 auto;
+    margin-bottom: 35px;
+    width: 850px;
+}
+.imgArea {
+    float: left;
+    width: 600px;
+    height: 370px;
+}
+.imgArea canvas{
+    display: block;
+    margin: 0 auto;
+}
+
+.ctrlArea {
+    float: left;
+    box-sizing: border-box;
+    margin-left: 35px;
+    width: 150px;
+    height: 370px;
+    padding: 25px 10px;
+}
+
+.ctrlArea button {
+    display: block;
+    padding: 3px 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #00CCFF;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn{
+    display: block;
+}

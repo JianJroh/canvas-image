@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>基于H5的图像识别</title>
+  <style>
+      .cvs{
+          width: 600px;
+          height: 370px;
+          border: 1px solid rgb(137, 71, 243);
+      }
+  </style>
+</head>
+
+<body>
+    <img src="./img/flower.jpg" style="width: 600px;height:370px" alt="">
+    <canvas id="canvas" width="600" height="370"></canvas>
+    <br>
+    <button id="btn" onclick="whiteBlack()">黑白二值化</button>
+    <button id="btn" onclick="imageEdge()">边缘识别黑白图</button>
+    <button id="btn" onclick="oldImg()">原图</button>
+
+
+  
+  
+  <script>
+    var cvs=document.getElementById('canvas');
+    var HEIGHT=cvs.height;
+    var WIDTH=cvs.width;
+    var ctx=cvs.getContext('2d');
+    var originPixel = null;
+    var pixel = null;
+    var opixel=null;
+    var edge=[];
+    var img=new Image();
+    // img.crossOrigin = 'anonymous'  // 跨域问题
+    img.src='./img/flower.jpg';
+    img.onload=function(){
+        ctx.drawImage(img,0,0,WIDTH,HEIGHT);
+        pixel = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+        originPixel = ctx.getImageData(0, 0, WIDTH, HEIGHT);   //  存储原图数据
+    };
+
+ 
+    // var wb_data = new Uint8ClampedArray(888000);
+ 
+ //黑白二值化
+    function whiteBlack(){
+      console.log('黑白二值化');
+        // var wb_data = new Uint8ClampedArray(888000);
+        var wb_data = pixel.data;
+        var red=0;
+        var green=0;
+        var blue=0;
+        var index=null;
+        var average=null;
+        for(var i=0;i<HEIGHT;i++) {
+            for (var j = 0; j < WIDTH; j++) {
+                index=(pixel.width*i+j)*4;
+                red=index;
+                green=index+1;
+                blue=index+2;
+                a = index+3;
+                average=Math.round((pixel.data[red]+pixel.data[green]+pixel.data[blue])/3);
+                if(average>=128){
+                    wb_data[red]=255;
+                    wb_data[green]=255;
+                    wb_data[blue]=255;
+                }else{
+                    wb_data[red]=0;
+                    wb_data[green]=0;
+                    wb_data[blue]=0;
+                    wb_data[a] = 255;   //alpha 通道（0-255; 0 是透明的，255 是完全可见的）默认255
+                }
+            }
+        }
+        pixel.data = wb_data;
+        ctx.putImageData(pixel,0,0);
+        // imageEdge();
+        // oldImg();
+        // imageEdge();
+    }
+
+    function imageEdge(){
+        console.log('黑白二值化后图像边缘绘制')
+        opixel=ctx.getImageData(0,0,WIDTH,HEIGHT);
+        var red=0;
+        var index=null;
+        var redVal=null;
+        var prevRedVal=null;
+        var nextRedVal=null;
+        var topRedVal=null;
+        var bottomRedVal=null;
+ 
+        for(var i=0;i<HEIGHT;i++){
+            for(var j=0;j<WIDTH;j++){
+                index=(pixel.width*i+j)*4;
+                red=index;
+                redVal=pixel.data[red];
+                prevRedVal=red-4>=0?pixel.data[red-4]:pixel.data[red];
+                nextRedVal=pixel.data[red+4];
+                topRedVal=(red-WIDTH*4)>=0?pixel.data[red-WIDTH*4]:pixel.data[red];
+                bottomRedVal=pixel.data[red+WIDTH*4];
+ 
+                if(redVal!=nextRedVal||redVal!=topRedVal||redVal!=prevRedVal||redVal!=bottomRedVal){
+                    // opixel.data[red]=255;
+                    opixel.data[red] =137;
+                    opixel.data[red+1] = 71;
+                    opixel.data[red+2] = 243
+                    edge.push(red);
+                }
+            }
+        }
+        ctx.putImageData(opixel,0,0);
+        // ctx.putImageData(pixel,0,0);
+    }
+
+    function oldImg(){
+        console.log('原图像显示');
+        ctx.putImageData(originPixel,0,0);
+    }
+  </script>
+</body>
+
+</html>

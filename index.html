@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Canvas图像边缘识别</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <div class="ti">
+    Canvas图像边缘识别
+  </div>
+  <div class="main clearfix">
+    <div class="imgArea">
+      <canvas id="cvs" width="600" height="370"></canvas>
+    </div>
+    <div class="ctrlArea">
+      <button type="button" onclick="originImg()">原图展示</button>
+      <button type="button" onclick="imgGrayScale()">灰度值化</button>
+      <button type="button" onclick="imgBinarization()">黑白二值化</button>
+      <button type="button" onclick="OTSUAlgorithm()">OTSU二值化</button>
+      <button type="button" onclick="imgEdge()">边缘绘制</button>
+      <!-- <button type="button" onclick="edge()">边缘绘制</button> -->
+      <button type="button" onclick="goDiscernEdge()">图像边缘识别</button>
+      <button type="button" onclick="changeImg()">更换其它图片</button>
+
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
+
+</body>
+
+</html>
